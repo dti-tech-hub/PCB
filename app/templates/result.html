@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Result - PCB Defect Inspector{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Inspection Result <span class="badge {{ row.status }}">{{ row.status }}</span></h2>
+  <p class="muted">{{ row.image_name }} &bull; {{ row.created_at }} &bull; method {{ 'sahi' if row.sahi_used else 'yolo' }} &bull; conf {{ "%.2f"|format(row.confidence) }} &bull; {{ "%.2f"|format(row.processing_time) }}s</p>
+  <div class="img-compare">
+    <figure><figcaption>Original</figcaption><img src="/uploads/original/{{ row.original_path }}" alt="original" /></figure>
+    <figure><figcaption>Annotated</figcaption><img src="/uploads/annotated/{{ row.annotated_path }}" alt="annotated" /></figure>
+  </div>
+</div>
+<div class="grid-4">
+  <div class="card stat"><div class="stat-num">{{ detections|length }}</div><div class="muted">Total defects</div></div>
+  <div class="card stat"><div class="stat-num {{ row.status }}">{{ row.status }}</div><div class="muted">Status</div></div>
+  <div class="card stat"><div class="stat-num">{{ "%.2f"|format(row.processing_time) }}s</div><div class="muted">Processing time</div></div>
+  <div class="card stat"><div class="stat-num">{{ 'SAHI' if row.sahi_used else 'YOLO' }}</div><div class="muted">Mode</div></div>
+</div>
+<div class="card">
+  <h3>Count per class</h3>
+  <div class="chips">
+    {% for k, v in counts.items() %}<span class="chip">{{ k }}: <strong>{{ v }}</strong></span>{% endfor %}
+  </div>
+</div>
+<div class="card">
+  <h3>Detections ({{ detections|length }})</h3>
+  {% if detections %}
+  <div class="table-wrap"><table>
+    <tr><th>#</th><th>Class</th><th>Confidence</th><th>Box (x1,y1,x2,y2)</th></tr>
+    {% for d in detections %}
+    <tr><td>{{ loop.index }}</td><td><span class="dot" data-cls="{{ d.class_name }}"></span>{{ d.class_name }}</td><td>{{ "%.2f"|format(d.confidence) }}</td><td>{{ d.x1|int }},{{ d.y1|int }},{{ d.x2|int }},{{ d.y2|int }}</td></tr>
+    {% endfor %}
+  </table></div>
+  {% else %}<p class="muted">No defects above threshold. PASS.</p>{% endif %}
+  <div class="actions">
+    <a class="btn primary" href="/report/{{ row.id }}">Download PDF Report</a>
+    <a class="btn" href="/inspect">Inspect Another</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PCB Defect Detection</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<header><h1>PCB Defect Detection (YOLO26 + SAHI)</h1>
+<nav><a href="/">Upload</a> | <a href="/history">History</a> | <a href="/export.csv">CSV</a></nav></header>
+<main>
+<h2>Upload PCB image</h2>
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+<form action="/upload" method="post" enctype="multipart/form-data">
+<input type="file" name="file" accept=".jpg,.jpeg,.png,.bmp" required />
+<button type="submit">Inspect</button>
+</form>
+<p class="hint">Pipeline: validate &rarr; quality &rarr; PCB check &rarr; YOLO26 / SAHI-4-slice &rarr; Pass/Fail &rarr; annotate &rarr; save.</p>
+<p class="hint">Weights: <code>models/pcb_yolo26.pt</code> (YOLO26, via betty0/pcb-defect-detection, AGPL-3.0). See README for upstream metrics.</p>
+</main>
+</body>
+</html>

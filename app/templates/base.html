@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{% block title %}PCB Defect Inspector{% endblock %}</title>
+<link rel="stylesheet" href="/static/style.css" />
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="/">&#9673; PCB Defect Inspector</a>
+    <nav class="links">
+      {% if user %}
+      <a href="/">Home</a>
+      <a href="/inspect">Inspect</a>
+      <a href="/history">History</a>
+      <a href="/logout">Logout ({{ user.username }})</a>
+      {% else %}
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+<main class="container">
+{% block content %}{% endblock %}
+</main>
+<footer class="footer">YOLO26 PCB defect detection &bull; 6 classes &bull; SAHI high-res mode</footer>
+</body>
+</html>

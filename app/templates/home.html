@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Home - PCB Defect Inspector{% endblock %}
+{% block content %}
+<div class="card hero">
+  <h2>Automated PCB surface defect detection</h2>
+  <p class="muted">Upload a PCB photo, run YOLO26 detection (optionally SAHI high-resolution mode), review PASS/FAIL, and download a PDF report.</p>
+  <div class="actions">
+    <a class="btn primary" href="/inspect">Inspect a PCB</a>
+    <a class="btn" href="/history">View History</a>
+  </div>
+</div>
+<div class="grid-3">
+  <div class="card stat"><div class="stat-num">{{ total }}</div><div class="muted">Total inspections</div></div>
+  <div class="card stat"><div class="stat-num pass">{{ passes }}</div><div class="muted">PASS</div></div>
+  <div class="card stat"><div class="stat-num fail">{{ fails }}</div><div class="muted">FAIL</div></div>
+</div>
+<div class="card">
+  <h3>Defect classes (6)</h3>
+  <div class="chips">
+    <span class="chip">missing_hole</span><span class="chip">mouse_bite</span><span class="chip">open_circuit</span><span class="chip">short</span><span class="chip">spur</span><span class="chip">spurious_copper</span>
+  </div>
+  <p class="muted">Pipeline: upload &rarr; quality check &rarr; PCB verification &rarr; YOLO26 / SAHI-4-slice &rarr; annotate &rarr; save &rarr; PDF.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Register - PCB Defect Inspector{% endblock %}
+{% block content %}
+<div class="card auth-card">
+  <h2>Create account</h2>
+  <p class="muted">Register to start inspecting PCB images.</p>
+  {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+  <form method="post" action="/register" class="form">
+    <label>Username
+      <input type="text" name="username" required minlength="3" maxlength="32" placeholder="e.g. inspector1" />
+    </label>
+    <label>Password
+      <input type="password" name="password" required minlength="4" placeholder="Min 4 characters" />
+    </label>
+    <label>Confirm password
+      <input type="password" name="confirm" required placeholder="Repeat password" />
+    </label>
+    <button class="btn primary" type="submit">Register</button>
+  </form>
+  <p class="muted">Already have an account? <a href="/login">Login</a></p>
+</div>
+{% endblock %}

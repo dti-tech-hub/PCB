@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+Jinja2
+opencv-python
+ultralytics
+sahi
+reportlab
+pytest
+python-multipart
+huggingface_hub
+bcrypt
+itsdangerous
+numpy

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}History - PCB Defect Inspector{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Inspection History</h2>
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <tr><th>Date</th><th>Image</th><th>Total</th><th>Status</th><th>Actions</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.created_at }}</td><td>{{ r.image_name }}</td><td>{{ r.total_defects }}</td>
+      <td><span class="badge {{ r.status }}">{{ r.status }}</span></td>
+      <td class="actions-cell">
+        <a class="btn small" href="/result/{{ r.id }}">View</a>
+        <a class="btn small" href="/report/{{ r.id }}">PDF</a>
+        <form method="post" action="/delete/{{ r.id }}" style="display:inline" onsubmit="return confirm('Delete this inspection?')">
+          <button class="btn small danger" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table></div>
+  {% else %}<p class="muted">No inspections yet. <a href="/inspect">Inspect your first PCB</a>.</p>{% endif %}
+</div>
+{% endblock %}
